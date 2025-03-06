@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -29,11 +30,40 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
+      <PaperProvider>
+        <Stack
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#6a0dad', // Cor roxa para o cabeçalho
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        >
+          <Stack.Screen 
+            name="index" 
+            options={{ 
+              title: 'Detector de Formato de Rosto',
+            }} 
+          />
+          <Stack.Screen 
+            name="capture" 
+            options={{ 
+              title: 'Capturar Foto',
+            }} 
+          />
+          <Stack.Screen 
+            name="result" 
+            options={{ 
+              title: 'Seu Formato e Recomendações',
+            }} 
+          />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
+        <StatusBar style="auto" />
+      </PaperProvider>
     </ThemeProvider>
   );
 }
